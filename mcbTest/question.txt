@@ -1,0 +1,5 @@
+could you help to check the figma-api-key code?
+
+Could you try to test this link "https://www.figma.com/design/A2Nzi9xrywMZc04ygQigRI/GGT--Web-testing---Copy-?node-id=747-2090&m=dev" for connection
+
+Crearte a complete html5, css, js and images using this figma "https://www.figma.com/design/A2Nzi9xrywMZc04ygQigRI/GGT--Web-testing---Copy-?node-id=747-2090&m=dev" in the specified folder. put images in the "images" folder.

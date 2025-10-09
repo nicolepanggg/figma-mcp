@@ -1,0 +1,26 @@
+{
+    "name": "GGT Event Gallery",
+    "short_name": "GGT Gallery",
+    "description": "GGT Event Gallery - Showcase of events, workshops, and activities",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#42B5E3",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "images/header-logo.png",
+            "sizes": "350x44",
+            "type": "image/png"
+        },
+        {
+            "src": "images/header-logo2.png",
+            "sizes": "500x208",
+            "type": "image/png"
+        }
+    ],
+    "categories": ["education", "gallery", "photos"],
+    "lang": "en",
+    "scope": "/",
+    "prefer_related_applications": false
+}

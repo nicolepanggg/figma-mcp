@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGT - Event Gallery</title>
+    <meta name="description" content="GGT Event Gallery - Explore our collection of events, workshops, interschool activities, and competitions">
+    <meta name="keywords" content="GGT, events, gallery, education, workshops, competitions">
+    <meta name="author" content="GGT">
+    <meta name="theme-color" content="#42B5E3">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/header-logo.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="images/header-logo.png" as="image">
+    <link rel="preload" href="images/header-logo2.png" as="image">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="topbar">
+                <img src="images/header-logo.png" alt="GGT Logo" class="logo">
+                <img src="images/header-logo2.png" alt="GGT Logo 2" class="logo-secondary">
+                <div class="language-selector">
+                    <div class="language-box">
+                        <span class="language-text">EN</span>
+                        <svg class="dropdown-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.22 8.47L12 14.25L17.78 8.47" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="user-icon">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M15 15.75V14.25C15 13.4544 14.6839 12.6913 14.1213 12.1287C13.5587 11.5661 12.7956 11.25 12 11.25H6C5.20435 11.25 4.44129 11.5661 3.87868 12.1287C3.31607 12.6913 3 13.4544 3 14.25V15.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 8.25C10.6569 8.25 12 6.90685 12 5.25C12 3.59315 10.6569 2.25 9 2.25C7.34315 2.25 6 3.59315 6 5.25C6 6.90685 7.34315 8.25 9 8.25Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">What's News</a></li>
+                    <li><a href="#" class="nav-link">About Us</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            Activities
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M4.15 5.65L8 9.5L11.85 5.65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            Online Course
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M4.15 5.65L8 9.5L11.85 5.65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li><a href="#" class="nav-link">Scholarship</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            Achievement
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M4.15 5.65L8 9.5L11.85 5.65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li><a href="#" class="nav-link">Teacher's Learn and Teach</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            Alumni Corner
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M4.15 5.65L8 9.5L11.85 5.65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Title -->
+            <div class="page-title">
+                <h1>Event Gallery</h1>
+                <p class="breadcrumb">Home > Activities > Event Gallery</p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <div class="filter-container">
+                    <button class="filter-btn active">Event Gallery</button>
+                    <button class="filter-btn">Workshop</button>
+                    <button class="filter-btn">Interschool Activity</button>
+                    <button class="filter-btn">Competition</button>
+                </div>
+            </div>
+
+            <!-- Image Gallery -->
+            <div class="gallery">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="images/gallery-1.png" alt="Event Gallery Image 1" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-2.png" alt="Event Gallery Image 2" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-3.png" alt="Event Gallery Image 3" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-4.png" alt="Event Gallery Image 4" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-5.png" alt="Event Gallery Image 5" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-6.png" alt="Event Gallery Image 6" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-7.png" alt="Event Gallery Image 7" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-8.png" alt="Event Gallery Image 8" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/gallery-9.png" alt="Event Gallery Image 9" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Activities</h3>
+                    <ul>
+                        <li><a href="#">Event Gallery</a></li>
+                        <li><a href="#">Workshop</a></li>
+                        <li><a href="#">Interschool Activity</a></li>
+                        <li><a href="#">Competition</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Programming</h3>
+                    <ul>
+                        <li><a href="#">Programming</a></li>
+                        <li><a href="#">A.I.</a></li>
+                        <li><a href="#">3D Modelling</a></li>
+                        <li><a href="#">Website</a></li>
+                        <li><a href="#">Other</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Activities</a></li>
+                        <li><a href="#">Internship</a></li>
+                        <li><a href="#">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Awards</h3>
+                    <ul>
+                        <li><a href="#">Awards</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Image Viewing -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-nav">
+            <button id="prevBtn" class="nav-btn">&#10094;</button>
+            <button id="nextBtn" class="nav-btn">&#10095;</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
