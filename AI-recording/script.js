@@ -1099,6 +1099,7 @@ function openArticle(articleId) {
     bookmarkBtn.onclick = () => toggleBookmark(articleId);
     document.getElementById('shareBtn').onclick = () => shareArticle(article);
     document.getElementById('readAloudModalBtn').onclick = () => toggleModalReadAloud(articleId);
+    document.getElementById('downloadAudioModalBtn').onclick = () => downloadModalAudio(articleId);
 
     // Reset modal read aloud button
     const modalReadBtn = document.getElementById('readAloudModalBtn');
@@ -1266,6 +1267,80 @@ function updateModalReadAloudButton(buttonElement, isReading) {
         text.textContent = getTranslation('read-full-article');
         buttonElement.classList.remove('reading');
         buttonElement.title = getTranslation('read-full-article');
+    }
+}
+
+// Download full article audio from modal
+async function downloadModalAudio(articleId) {
+    console.log('Starting downloadModalAudio for article:', articleId);
+    
+    const article = articlesData.find(a => a.id === articleId);
+    if (!article) {
+        console.error('Article not found:', articleId);
+        return;
+    }
+
+    const downloadBtn = document.getElementById('downloadAudioModalBtn');
+    if (!downloadBtn) {
+        console.error('Download audio modal button not found');
+        return;
+    }
+    
+    const originalText = downloadBtn.innerHTML;
+    
+    try {
+        // Update button to show initializing status
+        downloadBtn.innerHTML = `
+            <i class="fas fa-spinner fa-spin"></i>
+            <span class="download-audio-modal-text">${getTranslation('audio-setup-guide')}</span>
+        `;
+        downloadBtn.disabled = true;
+        downloadBtn.classList.add('downloading');
+
+        // Initialize audio recording if needed
+        console.log('Initializing audio recording for modal...');
+        const recordingInitialized = await initializeAudioRecording(true);
+        if (!recordingInitialized) {
+            console.log('Audio recording initialization failed');
+            return;
+        }
+        
+        console.log('Audio recording initialized successfully');
+        
+        // Update button to show recording status
+        downloadBtn.innerHTML = `
+            <i class="fas fa-circle" style="color: red; animation: pulse 1s infinite;"></i>
+            <span class="download-audio-modal-text">${getTranslation('recording')}</span>
+        `;
+
+        // Get full article content in current language
+        const title = currentLanguage === 'zh-TW' && article.titleZhTW ? article.titleZhTW : article.title;
+        const content = currentLanguage === 'zh-TW' && article.contentZhTW ? article.contentZhTW : article.content;
+        
+        console.log('Using title:', title);
+        console.log('Using full content for modal download');
+        
+        // Generate and download full article audio
+        await generateAndDownloadFullArticleAudio(article, title, content);
+        
+        console.log('Full article audio generation completed');
+
+    } catch (error) {
+        console.error('Error downloading modal audio:', error);
+        
+        // Show user-friendly error message
+        const errorMsg = currentLanguage === 'zh-TW' ? 
+            '音頻下載失敗。請檢查麥克風權限和立體聲混音設置。' :
+            'Audio download failed. Please check microphone permissions and Stereo Mix settings.';
+        alert(errorMsg);
+        
+        showMicrophoneHelpDialog(error);
+    } finally {
+        // Reset button
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        downloadBtn.classList.remove('downloading');
+        console.log('Download modal button reset');
     }
 }
 
