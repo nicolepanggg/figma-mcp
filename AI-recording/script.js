@@ -618,6 +618,8 @@ const translations = {
         'read-aloud': 'Read Aloud',
         'stop-reading': 'Stop Reading',
         'read-full-article': 'Read Full Article',
+        'download-audio': 'Download Audio',
+        'recording': 'Recording...',
         'like': 'Like',
         'share': 'Share',
         'bookmark': 'Bookmark',
@@ -701,6 +703,8 @@ const translations = {
         'read-aloud': '朗讀',
         'stop-reading': '停止朗讀',
         'read-full-article': '朗讀全文',
+        'download-audio': '下載音頻',
+        'recording': '錄製中...',
         'like': '喜歡',
         'share': '分享',
         'bookmark': '書籤',
@@ -975,6 +979,10 @@ function createArticleCard(article) {
                 <button class="read-aloud-btn" onclick="event.stopPropagation(); toggleReadAloud(${article.id}, this)" title="${readAloudText}">
                     <i class="fas fa-volume-up"></i>
                     <span class="read-aloud-text">${readAloudText}</span>
+                </button>
+                <button class="download-audio-btn" onclick="event.stopPropagation(); downloadArticleAudio(${article.id}, this)" title="${getTranslation('download-audio')}">
+                    <i class="fas fa-download"></i>
+                    <span class="download-audio-text">${getTranslation('download-audio')}</span>
                 </button>
             </div>
         </div>
@@ -2352,6 +2360,78 @@ const getCategoryDescription = (categoryName) => {
     const key = `category-desc-${categoryName.toLowerCase()}`;
     return getTranslation(key);
 };
+
+// Download article audio function
+async function downloadArticleAudio(articleId, buttonElement) {
+    console.log('Starting downloadArticleAudio for article:', articleId);
+    
+    const article = articlesData.find(a => a.id === articleId);
+    if (!article) {
+        console.error('Article not found:', articleId);
+        return;
+    }
+
+    const downloadBtn = buttonElement || document.querySelector(`.article-card[data-id="${articleId}"] .download-audio-btn`);
+    if (!downloadBtn) {
+        console.error('Download button not found for article:', articleId);
+        return;
+    }
+    
+    const originalText = downloadBtn.innerHTML;
+    
+    try {
+        // Update button to show initializing status
+        downloadBtn.innerHTML = `
+            <i class="fas fa-spinner fa-spin"></i>
+            <span class="download-audio-text">${getTranslation('audio-setup-guide') || 'Initializing...'}</span>
+        `;
+        downloadBtn.disabled = true;
+
+        // Initialize audio recording if needed
+        console.log('Initializing audio recording...');
+        const recordingInitialized = await initializeAudioRecording(true);
+        if (!recordingInitialized) {
+            console.log('Audio recording initialization failed');
+            return;
+        }
+        
+        console.log('Audio recording initialized successfully');
+        
+        // Update button to show recording status
+        downloadBtn.innerHTML = `
+            <i class="fas fa-circle" style="color: red; animation: pulse 1s infinite;"></i>
+            <span class="download-audio-text">${getTranslation('recording')}</span>
+        `;
+
+        // Get article content in current language
+        const title = currentLanguage === 'zh-TW' && article.titleZhTW ? article.titleZhTW : article.title;
+        const excerpt = currentLanguage === 'zh-TW' && article.excerptZhTW ? article.excerptZhTW : article.excerpt;
+        
+        console.log('Using title:', title);
+        console.log('Using excerpt:', excerpt.substring(0, 100) + '...');
+        
+        // Generate and download audio directly
+        await generateAndDownloadAudio(article, title, excerpt);
+        
+        console.log('Audio generation completed');
+
+    } catch (error) {
+        console.error('Error downloading audio:', error);
+        
+        // Show user-friendly error message
+        const errorMsg = currentLanguage === 'zh-TW' ? 
+            '音頻下載失敗。請檢查麥克風權限和立體聲混音設置。' :
+            'Audio download failed. Please check microphone permissions and Stereo Mix settings.';
+        alert(errorMsg);
+        
+        showMicrophoneHelpDialog(error);
+    } finally {
+        // Reset button
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+        console.log('Download button reset');
+    }
+}
 
 // Initialize lazy loading when DOM is loaded
 document.addEventListener('DOMContentLoaded', observeImages);
