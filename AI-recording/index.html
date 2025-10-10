@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArticleHub - Read Amazing Articles</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Audio processing library for MP3 conversion -->
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.0/lame.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-book-open"></i> ArticleHub</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active" data-translate="nav-home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#articles" class="nav-link" data-translate="nav-articles">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#categories" class="nav-link" data-translate="nav-categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link" data-translate="nav-about">About</a>
+                    </li>
+                </ul>
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="nav-controls">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="en" title="English">
+                            <i class="fas fa-globe"></i> EN
+                        </button>
+                        <button class="lang-btn" data-lang="zh-TW" title="繁體中文">
+                            <i class="fas fa-globe"></i> 繁
+                        </button>
+                    </div>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search articles..." id="searchInput">
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title" data-translate="hero-title">Discover Amazing Articles</h1>
+            <p class="hero-subtitle" data-translate="hero-subtitle">Explore a world of knowledge with our curated collection of articles</p>
+            <button class="cta-button" onclick="scrollToSection('articles')" data-translate="hero-cta">
+                Start Reading <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title" data-translate="featured-title">Featured Articles</h2>
+            <div class="featured-grid" id="featuredArticles">
+                <!-- Featured articles will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <h2 class="section-title" data-translate="categories-title">Browse by Category</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section class="articles-section" id="articles">
+        <div class="container">
+            <div class="articles-header">
+                <h2 class="section-title" data-translate="articles-title">Latest Articles</h2>
+                <div class="filter-container">
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all" data-translate="filter-all">All Categories</option>
+                    </select>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="newest" data-translate="sort-newest">Newest First</option>
+                        <option value="oldest" data-translate="sort-oldest">Oldest First</option>
+                        <option value="popular" data-translate="sort-popular">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+            <div class="articles-grid" id="articlesGrid">
+                <!-- Articles will be loaded here by JavaScript -->
+            </div>
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn" data-translate="load-more">Load More Articles</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Modal -->
+    <div class="modal" id="articleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closeModal">&times;</span>
+                <div class="article-meta">
+                    <span class="article-category" id="modalCategory"></span>
+                    <span class="article-date" id="modalDate"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h1 class="modal-title" id="modalTitle"></h1>
+                <div class="modal-author">
+                    <img src="" alt="Author" class="author-avatar" id="modalAuthorAvatar">
+                    <div class="author-info">
+                        <span class="author-name" id="modalAuthorName"></span>
+                        <span class="read-time" id="modalReadTime"></span>
+                    </div>
+                </div>
+                <div class="article-content" id="modalContent">
+                    <!-- Article content will be loaded here -->
+                </div>
+                <div class="article-actions">
+                    <button class="action-btn like-btn" id="likeBtn">
+                        <i class="far fa-heart"></i> <span id="likeCount">0</span>
+                    </button>
+                    <button class="action-btn share-btn" id="shareBtn" data-translate="share">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                    <button class="action-btn bookmark-btn" id="bookmarkBtn" data-translate="bookmark">
+                        <i class="far fa-bookmark"></i> Bookmark
+                    </button>
+                    <button class="action-btn read-aloud-modal-btn" id="readAloudModalBtn">
+                        <i class="fas fa-volume-up"></i> <span class="read-aloud-modal-text" data-translate="read-full-article">Read Full Article</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title" data-translate="about-title">About ArticleHub</h2>
+                <p class="about-text" data-translate="about-text">
+                    ArticleHub is your go-to destination for high-quality articles across various topics. 
+                    We curate and present content that informs, inspires, and engages readers from all walks of life.
+                </p>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <h3 class="stat-number">500+</h3>
+                        <p class="stat-label" data-translate="stat-articles">Articles</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number">50+</h3>
+                        <p class="stat-label" data-translate="stat-categories">Categories</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number">10K+</h3>
+                        <p class="stat-label" data-translate="stat-readers">Readers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-book-open"></i> ArticleHub</h3>
+                    <p>Your trusted source for quality articles and engaging content.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#articles">Articles</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">Business</a></li>
+                        <li><a href="#">Health</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to get the latest articles delivered to your inbox.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input">
+                        <button class="newsletter-btn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ArticleHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
